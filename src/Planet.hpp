@@ -11,12 +11,21 @@ public:
 	Planet(QPointF pos, float radius, QColor color);
 
 	void Resize(float newRadius) { radius = newRadius; }
+	void Select(bool select);
 
 	void Draw(QPainter* painter);
+
+	bool IsInside(QPointF point) const;
+
+private:
+	void Initialize(QColor color);
 
 private:
 	QPointF position;
 	float radius;
 
+	QColor selectionColor;
+
 	QBrush circle;
+	QPen outline;
 };

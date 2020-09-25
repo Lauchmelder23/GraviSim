@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 
 #include <QOpenGLWidget>
 
@@ -18,15 +19,24 @@ public:
 private slots:
 	void Render();
 
+private:
+	void lmb_MakePlanet(QMouseEvent* event);
+	void lmb_SelectPlanet(QMouseEvent* event);
+
 protected:
 	void paintEvent(QPaintEvent* event) override;
 
 private:
 	bool mouseDown = false;
+
+	std::function<void(QMouseEvent*)> lmbAction;
+
 	QPointF mouseClickPos;
 
 	QBrush background;
 	QTimer* renderTimer;
 
 	std::vector<Planet*> planets;
+	Planet* selected = nullptr;
+	Planet* hovered = nullptr;
 };
