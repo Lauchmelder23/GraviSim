@@ -82,6 +82,12 @@ void MainWindow::OnYChanged(double y)
 		activePlanet->position.ry() = y;
 }
 
+void MainWindow::OnDelete()
+{
+	ui.screen->DeletePlanet(activePlanet);
+	ClosePlanetDialog();
+}
+
 void MainWindow::OnToggle()
 {
 	isSimulating = !isSimulating;

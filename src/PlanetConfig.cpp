@@ -27,6 +27,9 @@ PlanetConfig::PlanetConfig(QWidget* parent) :
 	connect(ui.yPos, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
 		instance, [instance](double d) { instance->OnYChanged(d); });
 
+	connect(ui.remove, SIGNAL(clicked()),
+		instance, SLOT(OnDelete()));
+
 	connect(ui.toggle, SIGNAL(clicked()), 
 		instance, SLOT(OnToggle()));
 
@@ -38,6 +41,7 @@ void PlanetConfig::Disable()
 	ui.colour->setDisabled(true);
 	ui.xPos->setDisabled(true);
 	ui.yPos->setDisabled(true);
+	ui.remove->setDisabled(true);
 }
 
 void PlanetConfig::Enable()
@@ -46,6 +50,7 @@ void PlanetConfig::Enable()
 	ui.colour->setDisabled(false);
 	ui.xPos->setDisabled(false);
 	ui.yPos->setDisabled(false);
+	ui.remove->setDisabled(false);
 }
 
 void PlanetConfig::SetTitle(const QString& title)

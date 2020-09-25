@@ -23,6 +23,7 @@ public slots:
 	void OnColourChanged(const QColor& color);
 	void OnXChanged(double x);
 	void OnYChanged(double y);
+	void OnDelete();
 	void OnToggle();
 
 private:

@@ -45,7 +45,7 @@ void Screen::mouseMoveEvent(QMouseEvent* event)
 		{
 			if (planets[i]->IsInside(event->localPos()))
 			{
-				setCursor(Qt::OpenHandCursor);
+				setCursor(Qt::PointingHandCursor);
 				BIND_LMB(lmb_SelectPlanet);
 				hovered = planets[i];
 				break;
@@ -82,6 +82,21 @@ void Screen::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::MouseButton::LeftButton)
 		mouseDown = false;
+}
+
+void Screen::DeletePlanet(Planet* planet)
+{
+	for (std::vector<Planet*>::iterator it = planets.begin(); it != planets.end(); it++)
+	{
+		if ((*it) == planet)
+		{
+			planets.erase(it);
+			delete planet;
+			hovered = nullptr;
+			selected = nullptr;
+			break;
+		}
+	}
 }
 
 void Screen::Render()

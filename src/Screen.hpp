@@ -18,6 +18,8 @@ public:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
+	void DeletePlanet(Planet* planet);
+
 private slots:
 	void Render();
 
