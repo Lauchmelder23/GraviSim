@@ -13,6 +13,9 @@ public:
 	void Resize(float newRadius) { radius = newRadius; }
 	void Select(bool select);
 
+	void SetColor(const QColor& color);
+	const QColor& GetColor() { return circle.color(); }
+
 	void Draw(QPainter* painter);
 
 	bool IsInside(QPointF point) const;
@@ -22,6 +25,7 @@ private:
 
 public:
 	QPointF position;
+	QString name;
 	float radius;
 
 private:

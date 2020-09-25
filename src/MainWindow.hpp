@@ -18,9 +18,12 @@ public:
 	void ClosePlanetDialog();
 
 public slots:
+	void OnNameChanged(const QString& name);
 	void OnRadiusChanged(double radius);
+	void OnColourChanged(const QColor& color);
 	void OnXChanged(double x);
 	void OnYChanged(double y);
+	void OnToggle();
 
 private:
 	MainWindow();
@@ -28,6 +31,8 @@ private:
 
 private:
 	Ui::MainWindow ui;
+
+	bool isSimulating = false;
 
 	Planet* activePlanet;
 	static MainWindow* instance;

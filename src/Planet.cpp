@@ -20,6 +20,17 @@ void Planet::Select(bool select)
 		outline.setColor(Qt::transparent);
 }
 
+void Planet::SetColor(const QColor& color)
+{
+	circle = QBrush(color);
+	outline = QPen(Qt::transparent);
+	outline.setWidthF(4.f);
+
+	int h, s, v, a;
+	color.getHsv(&h, &s, &v, &a);
+	selectionColor = QColor::fromHsv((h + 180) % 360, s, v, a);
+}
+
 void Planet::Draw(QPainter* painter)
 {
 	painter->setBrush(circle);
@@ -35,11 +46,6 @@ bool Planet::IsInside(QPointF point) const
 
 void Planet::Initialize(QColor color)
 {
-	circle = QBrush(color);
-	outline = QPen(Qt::transparent);
-	outline.setWidthF(4.f);
-
-	int h, s, v, a;
-	color.getHsv(&h, &s, &v, &a);
-	selectionColor = QColor::fromHsv((h + 180) % 360, s, v, a);
+	name = "Unnamed";
+	SetColor(color);
 }

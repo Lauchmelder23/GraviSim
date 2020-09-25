@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>436</width>
-    <height>567</height>
+    <width>308</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,38 +17,32 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(222, 222, 222);</string>
+   <string notr="true"/>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0" colspan="2">
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>12</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
      <item>
-      <widget class="QLabel" name="name">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+      <widget class="QLineEdit" name="name">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>12</pointsize>
+         <family>Courier New</family>
+         <pointsize>10</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
-       <property name="text">
-        <string>TextLabel</string>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
-       <property name="textFormat">
-        <enum>Qt::AutoText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignHCenter|Qt::AlignTop</set>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
+       <property name="maxLength">
+        <number>24</number>
        </property>
       </widget>
      </item>
@@ -72,20 +66,23 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="radius">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
          <property name="maximum">
           <double>1000.000000000000000</double>
          </property>
          <property name="singleStep">
-          <double>0.100000000000000</double>
+          <double>1.000000000000000</double>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="label_5">
          <property name="font">
           <font>
            <family>Courier New</family>
@@ -101,25 +98,45 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="color" native="true"/>
+        <widget class="QLineEdit" name="colour">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="inputMask">
+          <string>Hhhhhh</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
      <item>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <family>Courier New</family>
-           <pointsize>12</pointsize>
-          </font>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="yPos">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
-         <property name="text">
-          <string>X</string>
+         <property name="maximum">
+          <double>10000.000000000000000</double>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <property name="singleStep">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="xPos">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="maximum">
+          <double>10000.989999999999782</double>
+         </property>
+         <property name="singleStep">
+          <double>1.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -139,27 +156,30 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QDoubleSpinBox" name="xPos">
-         <property name="maximum">
-          <double>1000.000000000000000</double>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <family>Courier New</family>
+           <pointsize>12</pointsize>
+          </font>
          </property>
-         <property name="singleStep">
-          <double>0.100000000000000</double>
+         <property name="text">
+          <string>X</string>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QDoubleSpinBox" name="yPos">
-         <property name="maximum">
-          <double>10000.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.100000000000000</double>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="toggle">
+       <property name="text">
+        <string>Start Simulation</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

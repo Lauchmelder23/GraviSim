@@ -7,7 +7,7 @@ cmake_minimum_required (VERSION 3.8)
 add_executable (GraviSim  
 	"main.cpp"
  "MainWindow.cpp"
-     "Screen.hpp" "Screen.cpp" "Planet.hpp" "Planet.cpp" "PlanetConfig.cpp")
+     "Screen.hpp" "Screen.cpp" "Planet.hpp" "Planet.cpp" "PlanetConfig.cpp" )
 
 target_link_libraries(GraviSim
 	Qt5::Widgets
