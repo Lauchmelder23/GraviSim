@@ -20,9 +20,11 @@ public:
 private:
 	void Initialize(QColor color);
 
-private:
+public:
 	QPointF position;
 	float radius;
+
+private:
 
 	QColor selectionColor;
 

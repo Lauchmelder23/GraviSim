@@ -7,6 +7,8 @@
 
 #include "Planet.hpp"
 
+class MainWindow;
+
 class Screen : public QOpenGLWidget
 {
 public:

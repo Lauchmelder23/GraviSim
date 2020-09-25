@@ -8,6 +8,8 @@
 #include <QTimer>
 #include <QtMath>
 
+#include "MainWindow.hpp"
+
 #define BIND_LMB(f) (lmbAction = std::bind(&Screen::f, this, std::placeholders::_1))
 
 Screen::Screen(QWidget* parent) :
@@ -53,7 +55,8 @@ void Screen::mouseMoveEvent(QMouseEvent* event)
 		if (hovered == nullptr)
 		{
 			setCursor(Qt::ArrowCursor);
-			BIND_LMB(lmb_MakePlanet);
+			if(selected == nullptr)
+				BIND_LMB(lmb_MakePlanet);
 		}
 	}
 }
@@ -103,9 +106,17 @@ void Screen::lmb_SelectPlanet(QMouseEvent* event)
 			selected->Select(false);
 
 		hovered->Select(true);
+		selected = hovered;
+		MainWindow::Instance()->OpenPlanetDialog(selected);
 	}
-
-	selected = hovered;
+	else
+	{
+		BIND_LMB(lmb_MakePlanet);
+		selected->Select(false);
+		selected = nullptr;
+		MainWindow::Instance()->ClosePlanetDialog();
+		return;
+	}
 }
 
 void Screen::paintEvent(QPaintEvent* event)
