@@ -7,8 +7,8 @@
 class Planet
 {
 public:
-	Planet(float xPos, float yPos, float radius, QColor color);
-	Planet(QPointF pos, float radius, QColor color);
+	Planet(uint32_t id, float xPos, float yPos, float radius, QColor color);
+	Planet(uint32_t id, QPointF pos, float radius, QColor color);
 
 	void Resize(float newRadius) { radius = newRadius; }
 	void Select(bool select);
@@ -16,7 +16,8 @@ public:
 	void SetColor(const QColor& color);
 	const QColor& GetColor() { return circle.color(); }
 
-	void Draw(QPainter* painter);
+	void Update();
+	void Draw(QPainter & painter);
 
 	bool IsInside(QPointF point) const;
 
@@ -24,9 +25,14 @@ private:
 	void Initialize(QColor color);
 
 public:
+	const uint32_t id;
+
 	QPointF position;
+	QPointF velocity;
+	QPointF acceleration;
 	QString name;
 	float radius;
+	float mass;
 
 private:
 
@@ -34,4 +40,7 @@ private:
 
 	QBrush circle;
 	QPen outline;
+
+	static QPen arrowColor;
+	static QLine arrow;
 };

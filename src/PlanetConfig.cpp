@@ -18,6 +18,9 @@ PlanetConfig::PlanetConfig(QWidget* parent) :
 	connect(ui.radius, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
 		instance, [instance](double d) { instance->OnRadiusChanged(d); });
 
+	connect(ui.mass, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+		instance, [instance](double d) { instance->OnMassChanged(d); });
+
 	connect(ui.colour, SIGNAL(returnPressed()),
 		this, SLOT(ColourTBSlot()));
 
@@ -38,6 +41,7 @@ PlanetConfig::PlanetConfig(QWidget* parent) :
 void PlanetConfig::Disable()
 {
 	ui.radius->setDisabled(true);
+	ui.mass->setDisabled(true);
 	ui.colour->setDisabled(true);
 	ui.xPos->setDisabled(true);
 	ui.yPos->setDisabled(true);
@@ -47,6 +51,7 @@ void PlanetConfig::Disable()
 void PlanetConfig::Enable()
 {
 	ui.radius->setDisabled(false);
+	ui.mass->setDisabled(false);
 	ui.colour->setDisabled(false);
 	ui.xPos->setDisabled(false);
 	ui.yPos->setDisabled(false);
@@ -76,6 +81,11 @@ void PlanetConfig::SetX(double x)
 void PlanetConfig::SetY(double y)
 {
 	ui.yPos->setValue(y);
+}
+
+void PlanetConfig::SetMass(double mass)
+{
+	ui.mass->setValue(mass);
 }
 
 void PlanetConfig::SetButtonLabel(const QString& label)

@@ -17,9 +17,12 @@ public:
 	void OpenPlanetDialog(Planet* planet);
 	void ClosePlanetDialog();
 
+	void UpdatePlanetPositionInDialog(const QPointF& position);
+
 public slots:
 	void OnNameChanged(const QString& name);
 	void OnRadiusChanged(double radius);
+	void OnMassChanged(double mass);
 	void OnColourChanged(const QColor& color);
 	void OnXChanged(double x);
 	void OnYChanged(double y);

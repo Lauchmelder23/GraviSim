@@ -19,6 +19,7 @@ public:
 	void SetColor(const QColor& color);
 	void SetX(double x);
 	void SetY(double y);
+	void SetMass(double mass);
 
 	void SetButtonLabel(const QString& label);
 

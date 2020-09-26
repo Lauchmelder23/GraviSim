@@ -33,6 +33,7 @@ void MainWindow::OpenPlanetDialog(Planet* planet)
 	ui.config->Enable();
 	ui.config->SetTitle(planet->name);
 	ui.config->SetRadius(planet->radius);
+	ui.config->SetMass(planet->mass);
 	ui.config->SetColor(planet->GetColor());
 	ui.config->SetX(planet->position.rx());
 	ui.config->SetY(planet->position.ry());
@@ -48,8 +49,15 @@ void MainWindow::ClosePlanetDialog()
 	ui.config->Disable();
 	ui.config->SetColor(QColor(0, 0, 0, 0));
 	ui.config->SetRadius(0.f);
+	ui.config->SetMass(0.f);
 	ui.config->SetX(0.f);
 	ui.config->SetY(0.f);
+}
+
+void MainWindow::UpdatePlanetPositionInDialog(const QPointF& position)
+{
+	ui.config->SetX(position.x());
+	ui.config->SetY(position.y());
 }
 
 void MainWindow::OnNameChanged(const QString& name)
@@ -62,6 +70,12 @@ void MainWindow::OnRadiusChanged(double radius)
 {
 	if(activePlanet != nullptr)
 		activePlanet->radius = radius;
+}
+
+void MainWindow::OnMassChanged(double mass)
+{
+	if (activePlanet != nullptr)
+		activePlanet->mass = mass;
 }
 
 void MainWindow::OnColourChanged(const QColor& color)
@@ -92,4 +106,5 @@ void MainWindow::OnToggle()
 {
 	isSimulating = !isSimulating;
 	ui.config->SetButtonLabel((isSimulating) ? "Stop Simulation" : "Start Simulation");
+	ui.screen->simulate = isSimulating;
 }

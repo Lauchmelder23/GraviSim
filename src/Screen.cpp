@@ -9,6 +9,7 @@
 #include <QtMath>
 
 #include "MainWindow.hpp"
+#include "PlanetManager.hpp"
 
 #define BIND_LMB(f) (lmbAction = std::bind(&Screen::f, this, std::placeholders::_1))
 
@@ -32,31 +33,29 @@ Screen::Screen(QWidget* parent) :
 
 void Screen::mouseMoveEvent(QMouseEvent* event)
 {
-	if (mouseDown && hovered == nullptr)
+	if (mouseDown && selected == nullptr && hovered == nullptr)
 	{
-		Planet* planet = planets.back();
+		Planet* planet = PlanetManager::GetLastPlanet();
 		QPointF distance = event->localPos() - mouseClickPos;
 		planet->Resize(qSqrt(distance.x()*distance.x() + distance.y() *distance.y()));
 	}
+	else if (mouseDown && selected != nullptr)
+	{
+		selected->velocity = event->localPos() - selected->position;
+	}
 	else
 	{
-		hovered = nullptr;
-		for (unsigned i = planets.size(); i-- > 0; )
-		{
-			if (planets[i]->IsInside(event->localPos()))
-			{
-				setCursor(Qt::PointingHandCursor);
-				BIND_LMB(lmb_SelectPlanet);
-				hovered = planets[i];
-				break;
-			}
-		}
-
+		hovered = PlanetManager::IsInPlanet(event->localPos());
 		if (hovered == nullptr)
 		{
 			setCursor(Qt::ArrowCursor);
 			if(selected == nullptr)
 				BIND_LMB(lmb_MakePlanet);
+		}
+		else
+		{
+			BIND_LMB(lmb_SelectPlanet);
+			setCursor(Qt::PointingHandCursor);
 		}
 	}
 }
@@ -72,7 +71,7 @@ void Screen::mousePressEvent(QMouseEvent* event)
 	{
 		if (mouseDown)
 		{
-			planets.pop_back();
+			PlanetManager::RemoveLastPlanet();
 			mouseDown = false;
 		}
 	}
@@ -86,17 +85,9 @@ void Screen::mouseReleaseEvent(QMouseEvent* event)
 
 void Screen::DeletePlanet(Planet* planet)
 {
-	for (std::vector<Planet*>::iterator it = planets.begin(); it != planets.end(); it++)
-	{
-		if ((*it) == planet)
-		{
-			planets.erase(it);
-			delete planet;
-			hovered = nullptr;
-			selected = nullptr;
-			break;
-		}
-	}
+	PlanetManager::RemovePlanet(planet->id);
+	hovered = nullptr;
+	selected = nullptr;
 }
 
 void Screen::Render()
@@ -106,9 +97,12 @@ void Screen::Render()
 
 void Screen::lmb_MakePlanet(QMouseEvent* event)
 {
-	planets.push_back(new Planet(event->localPos(), 0,
-		QColor(rand() % 256, rand() % 256, rand() % 256)
-	));
+	Planet* newPlanet = PlanetManager::AddPlanet(event->localPos(), 0,
+		QColor(rand() % 200, rand() % 200, rand() % 200)
+	);
+
+	newPlanet->velocity = QPointF(rand() % 400 - 200, rand() % 400 - 200);
+
 	mouseClickPos = event->localPos();
 	mouseDown = true;
 }
@@ -117,12 +111,19 @@ void Screen::lmb_SelectPlanet(QMouseEvent* event)
 {
 	if (hovered != nullptr)
 	{
-		if (selected != nullptr)
-			selected->Select(false);
+		if (selected != hovered)
+		{
+			if (selected != nullptr)
+				selected->Select(false);
 
-		hovered->Select(true);
-		selected = hovered;
-		MainWindow::Instance()->OpenPlanetDialog(selected);
+			hovered->Select(true);
+			selected = hovered;
+			MainWindow::Instance()->OpenPlanetDialog(selected);
+		}
+		else
+		{
+			mouseDown = true;
+		}
 	}
 	else
 	{
@@ -136,12 +137,20 @@ void Screen::lmb_SelectPlanet(QMouseEvent* event)
 
 void Screen::paintEvent(QPaintEvent* event)
 {
+	if (simulate)
+	{
+		PlanetManager::Update();
+		if (selected != nullptr)
+		{
+			MainWindow::Instance()->UpdatePlanetPositionInDialog(selected->position);
+		}
+	}
+
 	QPainter painter;
 	painter.begin(this);
 	painter.fillRect(rect(), background);
 
-	for (Planet* planet : planets)
-		planet->Draw(&painter);
+	PlanetManager::Render(painter);
 
 	painter.end();
 }

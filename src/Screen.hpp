@@ -5,8 +5,8 @@
 
 #include <QOpenGLWidget>
 
-#include "Planet.hpp"
 
+class Planet;
 class MainWindow;
 
 class Screen : public QOpenGLWidget
@@ -30,6 +30,9 @@ private:
 protected:
 	void paintEvent(QPaintEvent* event) override;
 
+public:
+	bool simulate = false;
+
 private:
 	bool mouseDown = false;
 
@@ -40,7 +43,6 @@ private:
 	QBrush background;
 	QTimer* renderTimer;
 
-	std::vector<Planet*> planets;
 	Planet* selected = nullptr;
 	Planet* hovered = nullptr;
 };
